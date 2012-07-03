@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Testing ALM - Exemplos de Testes Funcionais com ferramentas Open Source : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Testing ALM - Exemplos de Testes Funcionais com ferramentas Open Source</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eliasnogueira/testing-alm">View on GitHub</a>
+
+          <h1 id="project_title">Testing ALM - Exemplos de Testes Funcionais com ferramentas Open Source</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eliasnogueira/testing-alm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eliasnogueira/testing-alm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Introdução</h1>
+
+<p>Este projeto foi criado para uma palestra no TDC 2012 em SP no dia 05/07/2012 na trilha de ALM com o título: Testes Funcionais em um ALM Open Source</p>
+
+<p>O intuito do exemplo e apresentação é mostrar que, dentro de um projeto, todos devem dar foco não somente aos testes unitários e integração de componentes, mas também aos testes funcionais.
+Hoje muitos desenvolvedores usam, de forma correta, uma gama de ferramentas de teste e relacionadas para garantir a qualidade do código, mas isso não basta para entregar um produto de qualidade ao cliente.</p>
+
+<h1>Proposta</h1>
+
+<p>Apresentar a integração das ferramentas de Testes Funcionais e ferramentas relacionadas a etapa de teste.
+O projeto parte do principio que o time de teste utilize ferramentas para as seguintes frentes:</p>
+
+<ul>
+<li>Gestão de Teste</li>
+<li>Gestão de Defeitos</li>
+<li>Automação Funcional / Aceitação</li>
+</ul><h1>Funcionamento</h1>
+
+<p>Existem quatro pacotes relacionados as ferramentas de teste:</p>
+
+<ul>
+<li>bugzilla</li>
+<li>mantis</li>
+<li>testlink</li>
+<li>redmine</li>
+</ul><p>Cada pacote contem duas classes onde  é o nome da ferramenta: </p>
+
+<ul>
+<li>Instance: classe responsável pela comunicação inicial com a ferramenta (Singleton)</li>
+<li>Utils: classe de reescrita dos métodos da API de cada ferramenta</li>
+</ul><p>O pacote <em>selenium</em> contém os testes criados com Selenium/Webdriver utilizando um design pattern chamado PageObjects</p>
+
+<p>O pacote <em>utils</em> possui classes de apoio as ferramentas e a execução de teste</p>
+
+<p>O pacote <em>testes</em> possui o teste que é apresentado como exemplo</p>
+
+<h2>Configuração inicial</h2>
+
+<p>Antes de executar os testes deste projeto é necessário alterar o arquivi <em>config.properties</em> com as URL's e acessos necessários para cada ferramenta.</p>
+
+<p>Após isso é necessário configurar o Testlink e alguma ferramenta de Gestão de Defeitos para executar um dos exemplos.
+As configurações das ferramentas encontram-se no final desta página.</p>
+
+<h1>Configuração das Ferramentas</h1>
+
+<h3>Testlink</h3>
+
+<p>Foi utilizada a versão 1.9.3 para a integração do Testlink.
+Utilizei a API Java desenvolvida por <a href="http://www.kinoshita.eti.br/">Bruno Kinoshita</a> achamada <a href="http://testlinkjavaapi.sourceforge.net/">testlink-java-api</a></p>
+
+<p>Para que seja possível executar o exemplo é necessário:</p>
+
+<ul>
+<li>Efetuar login no Testlink</li>
+<li>Ir ao menu <em>My Settings</em> e clicar no botão <em>Generate API Access Key</em>. Guarde esta chave</li>
+<li>Adicionar as seguintes linhas no arquivo <em>custom_config.php</em>
+** $tlCfg-&gt;api-&gt;enabled = TRUE;
+** $tlCfg-&gt;exec_cfg-&gt;enable_test_automation = ENABLED;</li>
+<li>Alterar as seguintes propriedades o arquivo <em>config.properties</em> da aplicação de exemplo
+** testlink.url: substitua <em></em> pela URL do Testlink sem remover o restante do caminho
+** testlink.devkey: cole a key gerada ao item 2</li>
+</ul><h3>Mantis</h3>
+
+<p>Foi utilizado a versão 1.2.8 para a integração do Mantis.
+Utilizei a API Java chamada <a href="http://www.futureware.biz/mantisconnect/">MantisConnect</a>, mantida por um dos desenvolvedores do Mantis</p>
+
+<p>Para que seja possível executar o exemplo é necessário:</p>
+
+<ul>
+<li>Alterar as seguintes propriedades no arquivo <em>config.properties</em> da aplicação do exemplo
+** mantis.url: substitua <em></em> pela URL do Mantis sem remover o restante do caminho
+** mantis.user: usuario registrado no Mantis
+** mantis.password: senha do usuário registrado no Mantis</li>
+</ul><h3>Bugzilla</h3>
+
+<p>Foi utilizada a versão 4.2.1 para a integração do Bugzilla
+Nenhuma API especifica do Bugzilla foi usada. Utilizei diretamenta a classe <em>XmlRpcClient</em> da Apache para submeter as informações ao Bugzilla.</p>
+
+<p>Para que seja possível executar o exemplo é necessário:</p>
+
+<ul>
+<li>Alterar as seguintes propriedades no arquivo <em>config.properties</em> da aplicação do exemplo
+** bugzilla.url: substitua <em></em> pela URL do Bugzilla sem remover o restante do caminho
+** bugzilla.user: usuario registrado no Bugzilla
+** bugzilla.password: senha do usuário registrado no Bugzilla</li>
+</ul><h3>Redmine</h3>
+
+<p>Foi utilizada a versão 2.0.3 para a integração do Redmine
+Utilizei a API <a href="https://github.com/taskadapter/redmine-java-api">redmine-java-api</a> mantida pelo grupo de desenvolvimento do Redmine para submeter as informações para o Redmine.</p>
+
+<p>Como o Redmine não é nem um ferramenta de gestão de teste e nem uma ferramenta de gestão de defeitos, aqui estamos utilizando o módulo de issues, que se assemelha mais ao modelo de bugs.</p>
+
+<p>Para que seja possível executar o exemplo é necessário</p>
+
+<ul>
+<li>Efetuar login no Redmine</li>
+<li>Clicar no link <em>My account</em>
+</li>
+<li>Clicar no link <em>Show</em> do item <em>API access key</em>
+</li>
+<li>Alterar as seguintes propriedades no arquivo <em>config.properties</em> da aplicação do exemplo
+** redmine.url: substitua <em></em> pela URL do Redmine sem remover o restante do caminho
+** redmine.key: cole a chave do copiada do item <em>API access key</em>
+</li>
+</ul><h2>Execução do Exemplo</h2>
+
+<p>O exemplo está localizado no pacote <em>com.eliasnogueira.testing-alm.testes</em> e a classe de testes que deve ser executada é <em>ExecutaTestesPorFerramenta</em></p>
+
+<p>Esta classe utiliza o JUnit para o suporte a execução dos testes e tem três métodos de teste:</p>
+
+<ul>
+<li>erroBugzilla: executa o teste e reporta um bug no Bugzilla</li>
+<li>erroRedmine: executa o teste e reporta uma issue no Redmine</li>
+<li>erroMantis: execute o teste e reporta um erro no Mantis</li>
+</ul><p>Todos os métodos de teste também reportam resultado para o Testlink.</p>
+
+<p>O seguinte trecho em cada método irá gerar uma exception para simular um erro e chamar a integração de cada ferramenta:</p>
+
+<div class="highlight">
+<pre><span class="n">assertTrue</span><span class="o">(</span><span class="n">login</span><span class="o">.</span><span class="na">estaNaPaginaDeLogin</span><span class="o">(</span><span class="s">"PROVOCA ERRO"</span><span class="o">));</span>
+</pre>
+</div>
+
+
+<p>O resultado esperado para este assertion seria <em>ALM TDC</em></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Testing ALM - Exemplos de Testes Funcionais com ferramentas Open Source maintained by <a href="https://github.com/eliasnogueira">eliasnogueira</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
